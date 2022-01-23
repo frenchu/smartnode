@@ -125,12 +125,12 @@ func AssignMaxFeeAndLimit(gasInfo rocketpool.GasInfo, rp *rpsvc.Client, headless
 func GetHeadlessMaxFeeWei() (*big.Int, error) {
     etherchainData, err := etherchain.GetGasPrices()
     if err == nil {
-        return etherchainData.RapidWei, nil
+        return etherchainData.SlowWei, nil
     } else {
         fmt.Printf("%sWarning: couldn't get gas estimates from Etherchain - %s\nFalling back to Etherscan%s\n", colorYellow, err.Error(), colorReset)
         etherscanData, err := etherscan.GetGasPrices()
         if err == nil {
-            return eth.GweiToWei(etherscanData.FastGwei), nil
+            return eth.GweiToWei(etherscanData.SlowGwei), nil
         } else {
             return nil, fmt.Errorf("Error getting gas price suggestions: %w", err)
         }
